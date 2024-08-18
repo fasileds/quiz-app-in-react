@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuiseCards from "./components/QuiseCards";
+
 const questions = [
   {
     question: "What is the capital city of Ethiopia?",
@@ -68,7 +69,7 @@ const Quiz = () => {
   const [timeTaken, setTimeTaken] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const optionLabels = ["A", "B", "C", "D", "E"];
+  const optionLabels = ["A", "B", "C", "D"];
 
   useEffect(() => {
     const startTime = Date.now();
@@ -102,6 +103,13 @@ const Quiz = () => {
     setSelectedOption(null);
   };
 
+  // Calculate minutes, seconds, and microseconds
+  const totalMilliseconds = timeTaken;
+  const totalSeconds = Math.floor(totalMilliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const microseconds = Math.floor((totalMilliseconds % 1000) * 1000);
+
   if (isFinished) {
     return (
       <div className="result-container text-center p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -109,7 +117,8 @@ const Quiz = () => {
           Your Score: {score}/{questions.length}
         </h2>
         <p className="text-lg text-gray-700 mt-2">
-          Time Taken: {Math.floor(timeTaken / 1000)} seconds
+          Time Taken: {minutes} minutes, {seconds} seconds, and {microseconds}{" "}
+          microseconds
         </p>
         <button
           className="back-button mt-6 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300"
